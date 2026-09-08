@@ -1,0 +1,2 @@
+/* Larger album-art label while keeping a visible pink vinyl rim. */
+.record{width:250px;padding:14%}.record img{border:3px solid var(--ink);box-shadow:0 0 0 5px #ffd3e3}

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A pink vinyl player with live music search and tiny notes." />
+    <title>Pink Petal Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/spotify.css') }}" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="site-header"><a class="logo" href="/">Pink Petal<br>Records</a><div><a class="spotify-login" id="spotifyLogin" href="/login">connect spotify</a><p>✦ listen softly · remember everything ✦</p></div></header>
+      <section class="player-layout" aria-label="Music player">
+        <article class="turntable-panel">
+          <p class="eyebrow">Now playing on the bedroom floor</p>
+          <div class="turntable" id="turntable">
+            <div class="record" id="record"><div class="record-label" id="recordLabel"><span>choose<br>a song</span><i></i></div></div>
+            <div class="tonearm" aria-hidden="true"></div><span class="sparkle one">✦</span><span class="sparkle two">♥</span>
+          </div>
+          <div class="now-playing"><button id="playButton" class="round-button" aria-label="Play selected song" disabled>▶</button><div><b id="songTitle">No song selected</b><span id="songArtist">Search for a song to begin</span></div><button id="restartButton" class="text-button" disabled>↺ restart</button></div>
+          <audio id="audio" preload="none"></audio>
+        </article>
+        <div class="right-column">
+          <section class="card search-card"><h1>your little<br><em>soundtrack</em></h1><p>Connect your Spotify, search real songs, and let the vinyl move with the music.</p><form id="searchForm" class="search-form"><label class="sr-only" for="searchInput">Search for a song or artist</label><input id="searchInput" required minlength="2" placeholder="search a song or artist…" autocomplete="off" disabled /><button disabled>search ♡</button></form><p class="status" id="searchStatus" aria-live="polite">Connect Spotify to unlock your record crate.</p><div id="results" class="search-results"></div><small>Powered by Spotify · playback requires Spotify Premium.</small></section>
+          <section class="card note-card"><h2>✿ note tucked inside the sleeve</h2><textarea id="noteInput" maxlength="500" placeholder="write a tiny thought, a lyric, or something you don't want to forget…"></textarea><div class="note-actions"><span id="counter">0 / 500</span><button id="saveNoteButton" class="save-button">save note ♡</button></div><div id="notesList" class="notes-list" aria-live="polite"></div></section>
+        </div>
+      </section>
+    </main>
+    <script src="https://sdk.scdn.co/spotify-player.js"></script><script src="{{ url_for('static', filename='js/spotify.js') }}"></script>
+  </body>
+</html>

@@ -1,0 +1,6 @@
+__pycache__/
+.venv/
+*.py[cod]
+pink_petal.db
+.env
+.DS_Store
