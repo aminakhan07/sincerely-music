@@ -99,25 +99,50 @@ def album_mood():
     """Return a small palette calculated from the current Spotify album artwork."""
     artwork = request.args.get("artwork", "")
     host = urlparse(artwork).hostname or ""
+
     if not artwork.startswith("https://") or not ("spotify" in host or host.endswith("scdn.co")):
-        return jsonify({"primary": "#e85b9a", "secondary": "#5d2449", "light": "#fff0f6"})
+        return jsonify({
+            "primary": "#e85b9a",
+            "secondary": "#5d2449",
+            "light": "#fff0f6"
+        })
+
     try:
         with urlopen(artwork, timeout=8) as response:
-            image = Image.open(io.BytesIO(response.read())).convert("RGB").resize((80, 80))
+            image = Image.open(
+                io.BytesIO(response.read())
+            ).convert("RGB").resize((80, 80))
+
         palette_image = image.quantize(colors=8)
         palette = palette_image.getpalette()
         swatches = sorted(palette_image.getcolors() or [], reverse=True)
+
         colours = []
+
         for _, index in swatches:
             red, green, blue = palette[index * 3:index * 3 + 3]
+
             if max(red, green, blue) - min(red, green, blue) > 18 and max(red, green, blue) > 55:
                 colour = f"#{red:02x}{green:02x}{blue:02x}"
-                if colour not in colours: colours.append(colour)
+
+                if colour not in colours:
+                    colours.append(colour)
+
         primary = colours[0] if colours else "#e85b9a"
         secondary = colours[1] if len(colours) > 1 else "#5d2449"
-        return jsonify({"primary": primary, "secondary": secondary, "light": "#fff5f9"})
+
+        return jsonify({
+            "primary": primary,
+            "secondary": secondary,
+            "light": "#fff5f9"
+        })
+
     except (OSError, ValueError):
-        return jsonify({"primary": "#e85b9a", "secondary": "#5d2449", "light": "#fff0f6"})
+        return jsonify({
+            "primary": "#e85b9a",
+            "secondary": "#5d2449",
+            "light": "#fff0f6"
+        })
 @app.get("/api/notes")
 def get_notes():
     with db_connection() as connection: rows = connection.execute("SELECT id, body, track_name, artist_name, created_at FROM notes ORDER BY id DESC LIMIT 30").fetchall()
