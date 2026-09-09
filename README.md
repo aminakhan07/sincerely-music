@@ -1,40 +1,55 @@
-# Pink Petal Records
+# Sincerely, Music
 
-A pink, vinyl-inspired Spotify companion. It mirrors the song currently playing in your Spotify laptop app: album art becomes the vinyl label, the vinyl spins while it plays, and the controls act on Spotify's active device.
+A dreamy, vinyl-inspired Spotify companion for Windows.
 
-## Stack
+Sincerely, Music mirrors the song currently playing in your Spotify desktop app. The album artwork becomes the vinyl label, the record spins while the song plays, and the controls let you interact with Spotify directly from the companion window.
 
-- **HTML**: mini player template in `templates/companion.html`
-- **CSS**: mini player visual design in `static/css/companion.css`
-- **JavaScript**: Spotify sync, controls, and notes UI in `static/js/companion.js`
-- **Python / Flask**: Spotify OAuth, Spotify API routes, and SQLite persistence in `app.py`
+## Features
 
-## Run it in VS Code
+- 🎵 Syncs with the song currently playing on Spotify
+- 💿 Album artwork displayed as the vinyl label
+- ✦ Vinyl animation while music is playing
+- ⏮ Previous track
+- ▶ Play / pause
+- ⏭ Next track
+- 🎚 Seek through the current song
+- 📝 Save notes for songs
+- 🎨 Album-based mood colors
+- 🔐 Spotify login with persistent authentication
+- 🖥️ Runs as a Windows desktop app
+- 🌸 Custom Sincerely, Music interface
 
-1. Open this folder in Visual Studio Code.
-2. Create a Spotify app in the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard). In its settings add this Redirect URI exactly: `http://127.0.0.1:5000/callback`.
-3. Duplicate `.env.example` as `.env`, then paste your Spotify Client ID and Client Secret. Never commit `.env`.
-4. Open its terminal and create a virtual environment:
-   ```powershell
-   py -m venv .venv
-   .\.venv\Scripts\Activate.ps1
-   pip install -r requirements.txt
-   ```
-5. Start the app:
-   ```powershell
-   python app.py
-   ```
-6. Open Spotify on your laptop and play any song. Visit `http://127.0.0.1:5000`, choose **link spotify**, then approve the login. The mini player will now follow the music playing in Spotify.
+## Tech Stack
 
-## APIs
+- **HTML** — player interface in `templates/player.html`
+- **CSS** — visual design in `static/css/`
+- **JavaScript** — Spotify sync and player controls in `static/js/player.js`
+- **Python / Flask** — Spotify OAuth, API routes, and application logic in `app.py`
+- **SQLite** — local storage for song notes
+- **pywebview** — desktop application window
 
-- `GET /login` and `GET /callback`: secure Spotify OAuth login. Your secret stays in Python, never JavaScript.
-- `GET /api/spotify/current`: reads the track and play state from your active Spotify device.
-- `POST /api/spotify/control`: pauses, resumes, or seeks in your active Spotify device.
-- `GET /api/notes`: returns saved notes.
-- `POST /api/notes`: stores a note with the currently selected song in SQLite.
+## Running the App
 
-Spotify Premium is required for Spotify's playback-control endpoints. New developer-mode apps work for the app owner and up to five allowlisted testers, which is perfect for a personal portfolio project.
+### 1. Set up Spotify
 
+Create an application in the Spotify Developer Dashboard.
 
-`pink_petal.db` is intentionally ignored: it is generated locally when you first run the app.
+Add this Redirect URI to your Spotify app:
+
+`http://127.0.0.1:5000/callback`
+
+### 2. Configure environment variables
+
+Create a `.env` file in the project folder containing your Spotify Client ID and Client Secret.
+
+Never commit your `.env` file.
+
+### 3. Install dependencies
+
+Create and activate a virtual environment:
+
+```powershell
+py -m venv .venv
+.\.venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+```
