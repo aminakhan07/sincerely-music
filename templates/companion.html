@@ -1,1 +1,54 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Pink Petal Spotify Companion</title><link rel="stylesheet" href="{{ url_for('static', filename='css/companion.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/cover-tweak.css') }}"><link rel="stylesheet" href="{{ url_for('static', filename='css/mood.css') }}"></head><body><main class="window"><header><span>✦ PINK PETAL PLAYER</span><a id="login" href="/login">link spotify</a></header><section class="vinyl-zone"><div id="record" class="record"><img id="art" alt="Current album cover"><div class="hole"></div></div><span class="sparkle">✦</span></section><section class="song"><p id="title">open Spotify on your laptop</p><small id="artist">then link your account here</small></section><section class="controls"><button id="play" disabled>▶</button><input id="seek" type="range" min="0" max="100" value="0" disabled><span id="time">0:00</span></section><p id="status">This little window will follow the Spotify app already playing on your laptop.</p><section class="note"><label for="noteInput">♡ tiny note for this song</label><textarea id="noteInput" maxlength="500" placeholder="write a feeling, lyric, or memory…"></textarea><div><span id="count">0 / 500</span><button id="save">save note</button></div></section><div id="notes"></div></main><script src="{{ url_for('static', filename='js/companion.js') }}"></script><script src="{{ url_for('static', filename='js/mood.js') }}"></script></body></html>
+<!doctype html><html lang="en">
+    <head>
+        <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Pink Petal Spotify Companion</title>
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/companion.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/cover-tweak.css') }}">
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/mood.css') }}">
+    </head>
+    <body>
+        <main class="window">
+            <header>
+                <span>✦ PINK PETAL PLAYER</span>
+                <a id="login" href="/login">link spotify</a>
+            </header>
+            <section class="vinyl-zone">
+                <div id="record" class="record">
+                    <img id="art" alt="Current album cover">
+                    <div class="hole">
+
+                    </div>
+                </div>
+                <span class="sparkle">✦</span>
+            </section>
+            <section class="song">
+                <p id="title">open Spotify on your laptop</p>
+                <small id="artist">then link your account here</small>
+            </section>
+            <section class="controls">
+                <button id="play" disabled>▶</button>
+                <input id="seek" type="range" min="0" max="100" value="0" disabled>
+                <span id="time">0:00</span>
+            </section><p id="status">This little window will follow the Spotify app already playing on your laptop.</p>
+            <section class="note">
+                <label for="noteInput">♡ tiny note for this song</label>
+                <textarea id="noteInput" maxlength="500" placeholder="write a feeling, lyric, or memory…">
+
+                </textarea>
+                <div>
+                    <span id="count">0 / 500</span>
+                    <button id="save">save note</button>
+                </div>
+            </section>
+            <div id="notes">
+
+            </div>
+        </main>
+        <script src="{{ url_for('static', filename='js/companion.js') }}">
+
+        </script>
+        <script src="{{ url_for('static', filename='js/mood.js') }}">
+
+        </script>
+    </body>
+    </html>

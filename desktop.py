@@ -14,7 +14,7 @@ def start_server():
 if __name__ == "__main__":
     Thread(target=start_server, daemon=True).start()
     webview.create_window(
-        "Pink Petal Records",
+        "Sincerely, Music",
         "http://127.0.0.1:5000",
         width=470,
         height=760,

@@ -7,6 +7,7 @@ from urllib.error import HTTPError
 from urllib.parse import urlencode, urlparse
 from urllib.request import Request, urlopen
 from dotenv import load_dotenv
+import keyring
 from flask import Flask, jsonify, redirect, render_template, request, session, url_for
 from PIL import Image
 
@@ -14,11 +15,14 @@ BASE_DIR = Path(__file__).resolve().parent
 DATABASE = BASE_DIR / "pink_petal.db"
 load_dotenv(BASE_DIR / ".env")
 app = Flask(__name__)
-app.secret_key = os.getenv("FLASK_SECRET_KEY", "replace-this-in-your-env-file")
+app.secret_key = os.getenv("FLASK_SECRET_KEY")
 CLIENT_ID = os.getenv("SPOTIFY_CLIENT_ID", "")
 CLIENT_SECRET = os.getenv("SPOTIFY_CLIENT_SECRET", "")
 REDIRECT_URI = os.getenv("SPOTIFY_REDIRECT_URI", "http://127.0.0.1:5000/callback")
 SCOPES = "user-read-currently-playing user-read-playback-state user-modify-playback-state"
+
+KEYRING_SERVICE = "Sincerely Music"
+KEYRING_USER = "spotify_refresh_token" 
 
 def db_connection():
     connection = sqlite3.connect(DATABASE); connection.row_factory = sqlite3.Row; return connection
@@ -36,12 +40,32 @@ def spotify_request(url, token, method="GET", body=None):
     with urlopen(Request(url, data=data, headers=headers, method=method), timeout=10) as response: return {} if response.status == 204 else json.load(response)
 def active_spotify_token():
     token = session.get("spotify_token")
-    if token and session.get("spotify_expires_at", 0) > time.time() + 30: return token
+
+    if token and session.get("spotify_expires_at", 0) > time.time() + 30:
+        return token
+
     refresh_token = session.get("spotify_refresh_token")
-    if not refresh_token: return None
-    refreshed = spotify_token_request({"grant_type": "refresh_token", "refresh_token": refresh_token})
+
+    if not refresh_token:
+        refresh_token = keyring.get_password(KEYRING_SERVICE, KEYRING_USER)
+
+    if not refresh_token:
+        return None
+
+    refreshed = spotify_token_request({
+        "grant_type": "refresh_token",
+        "refresh_token": refresh_token
+    })
+
     session["spotify_token"] = refreshed["access_token"]
     session["spotify_expires_at"] = time.time() + refreshed.get("expires_in", 3600)
+
+    if refreshed.get("refresh_token"):
+        refresh_token = refreshed["refresh_token"]
+        keyring.set_password(KEYRING_SERVICE, KEYRING_USER, refresh_token)
+
+    session["spotify_refresh_token"] = refresh_token
+
     return session["spotify_token"]
 
 @app.get("/")
@@ -54,12 +78,37 @@ def spotify_login():
     return redirect(f"https://accounts.spotify.com/authorize?{query}")
 @app.get("/callback")
 def spotify_callback():
-    if request.args.get("state") != session.pop("spotify_state", None): return "Spotify login could not be verified. Please try again.", 400
-    try: tokens = spotify_token_request({"grant_type": "authorization_code", "code": request.args["code"], "redirect_uri": REDIRECT_URI})
-    except (KeyError, HTTPError, OSError): return "Spotify login failed. Check your app's redirect URI and try again.", 400
-    session["spotify_token"] = tokens["access_token"]; session["spotify_refresh_token"] = tokens.get("refresh_token"); session["spotify_expires_at"] = time.time() + tokens.get("expires_in", 3600); return redirect(url_for("index"))
+    if request.args.get("state") != session.pop("spotify_state", None):
+        return "Spotify login could not be verified. Please try again.", 400
+
+    try:
+        tokens = spotify_token_request({
+            "grant_type": "authorization_code",
+            "code": request.args["code"],
+            "redirect_uri": REDIRECT_URI
+        })
+    except (KeyError, HTTPError, OSError):
+        return "Spotify login failed. Check your app's redirect URI and try again.", 400
+
+    session["spotify_token"] = tokens["access_token"]
+    session["spotify_expires_at"] = time.time() + tokens.get("expires_in", 3600)
+
+    refresh_token = tokens.get("refresh_token")
+
+    if refresh_token:
+        keyring.set_password(KEYRING_SERVICE, KEYRING_USER, refresh_token)
+        session["spotify_refresh_token"] = refresh_token
+
+    return redirect(url_for("index"))
 @app.get("/logout")
-def spotify_logout(): session.clear(); return redirect(url_for("index"))
+def spotify_logout():
+    try:
+        keyring.delete_password(KEYRING_SERVICE, KEYRING_USER)
+    except keyring.errors.PasswordDeleteError:
+        pass
+
+    session.clear()
+    return redirect(url_for("index"))
 @app.get("/api/spotify/session")
 def spotify_session(): return jsonify({"authenticated": bool(active_spotify_token()), "client_configured": bool(CLIENT_ID and CLIENT_SECRET)})
 @app.get("/api/search")
@@ -85,14 +134,49 @@ def spotify_current():
 @app.post("/api/spotify/control")
 def spotify_control():
     token, data = active_spotify_token(), request.get_json(silent=True) or {}
-    if not token: return jsonify({"error": "Connect Spotify first."}), 401
+
+    if not token:
+        return jsonify({"error": "Connect Spotify first."}), 401
+
     action = data.get("action")
+
     try:
         if action == "toggle":
-            playing = bool(data.get("playing")); spotify_request("https://api.spotify.com/v1/me/player/pause" if playing else "https://api.spotify.com/v1/me/player/play", token, "PUT")
-        elif action == "seek": spotify_request(f"https://api.spotify.com/v1/me/player/seek?{urlencode({'position_ms': int(data.get('position_ms', 0))})}", token, "PUT")
-        else: return jsonify({"error": "Unknown Spotify control."}), 400
-    except HTTPError as error: return jsonify({"error": "Spotify could not control your active device. Open Spotify on your laptop first."}), error.code
+            playing = bool(data.get("playing"))
+            spotify_request(
+                "https://api.spotify.com/v1/me/player/pause" if playing
+                else "https://api.spotify.com/v1/me/player/play",
+                token,
+                method="PUT"
+            )
+
+        elif action == "seek":
+            spotify_request(
+                f"https://api.spotify.com/v1/me/player/seek?{urlencode({'position_ms': data.get('position_ms', 0)})}",
+                token,
+                method="PUT"
+            )
+
+        elif action == "previous":
+            spotify_request(
+                "https://api.spotify.com/v1/me/player/previous",
+                token,
+                method="POST"
+            )
+
+        elif action == "next":
+            spotify_request(
+                "https://api.spotify.com/v1/me/player/next",
+                token,
+                method="POST"
+            )
+
+        else:
+            return jsonify({"error": "Unknown Spotify control."}), 400
+
+    except HTTPError as error:
+        return jsonify({"error": "Spotify could not control your active device. Open Spotify on your laptop."}), error.code
+
     return jsonify({"ok": True})
 @app.get("/api/mood")
 def album_mood():

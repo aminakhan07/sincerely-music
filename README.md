@@ -36,17 +36,5 @@ A pink, vinyl-inspired Spotify companion. It mirrors the song currently playing 
 
 Spotify Premium is required for Spotify's playback-control endpoints. New developer-mode apps work for the app owner and up to five allowlisted testers, which is perfect for a personal portfolio project.
 
-## Push to GitHub
-
-Create an empty repository on GitHub, then use the VS Code terminal in this project folder:
-
-```powershell
-git init
-git add .
-git commit -m "Build Pink Petal Records"
-git branch -M main
-git remote add origin https://github.com/YOUR-USERNAME/pink-petal-records.git
-git push -u origin main
-```
 
 `pink_petal.db` is intentionally ignored: it is generated locally when you first run the app.
