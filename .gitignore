@@ -4,3 +4,4 @@ __pycache__/
 pink_petal.db
 .env
 .DS_Store
+sincerely-music.db
