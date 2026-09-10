@@ -1,37 +1,67 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <title>✦ SINCERELY, MUSIC</title><link rel="stylesheet" href="{{ url_for('static', filename='css/companion.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/cover-tweak.css') }}">
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/mood.css') }}">
-    </head>
-    <body>
-        <main class="window player-only">
-            <header><span>✦ SINCERELY, MUSIC</span>
-                <a id="login" href="/login">link spotify</a>
-            </header>
-            <section class="vinyl-zone">
-                <div id="record" class="record">
-                    <img id="art" alt="Current album cover">
-                    <div class="hole"></div></div><span class="sparkle">✦</span></section>
-                    <section class="song">
-                        <p id="title">open Spotify on your laptop</p>
-                        <small id="artist">then link your account here</small>
-                    </section>
-                    <section class="controls">
-    <button id="previous" disabled>⏮</button>
-    <button id="play" disabled>▶</button>
-    <button id="next" disabled>⏭</button>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <input id="seek" type="range" min="0" max="100" value="0" disabled>
-    <span id="time">0:00</span>
-</section>
-                    <p id="status">This little window will follow the Spotify app already playing on your laptop.</p
-                        ></main>
-                        <script src="{{ url_for('static', filename='js/player.js') }}">
+    <title>✦ SINCERELY, MUSIC</title>
 
-                        </script>
-                    </body>
-                    </html>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/companion.css') }}"
+    />
+
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/mood.css') }}"
+    />
+  </head>
+
+  <body>
+    <main class="window player-only">
+      <header>
+        <span class="brand">✦ SINCERELY, MUSIC</span>
+        <a id="login" href="/login">link spotify</a>
+      </header>
+
+      <section class="vinyl-zone">
+        <div id="record" class="record">
+          <img id="art" alt="Current album cover" />
+          <div class="hole"></div>
+        </div>
+
+        <span class="sparkle">✦</span>
+      </section>
+
+      <section class="song">
+        <p id="title">open Spotify on your laptop</p>
+        <small id="artist">then link your account here</small>
+      </section>
+
+      <section class="controls">
+        <button id="previous" class="control-button" disabled>⏮</button>
+
+        <button id="play" class="control-button play-button" disabled>▶</button>
+
+        <button id="next" class="control-button" disabled>⏭</button>
+
+        <button id="loop" class="control-button loop-button" disabled>↻</button>
+      </section>
+
+      <section class="progress">
+        <span id="current-time">0:00</span>
+
+        <input id="seek" type="range" min="0" max="100" value="0" disabled />
+
+        <span id="time">0:00</span>
+      </section>
+
+      <p id="status">
+        This little window will follow the Spotify app already playing on your
+        laptop.
+      </p>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/player.js') }}"></script>
+  </body>
+</html>

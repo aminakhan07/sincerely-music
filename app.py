@@ -170,6 +170,14 @@ def spotify_control():
                 token,
                 method="POST"
             )
+        elif action == "loop":
+            state = "track" if request.get_json().get("enabled") else "off"
+
+            spotify_request(
+        f"https://api.spotify.com/v1/me/player/repeat?state={state}",
+        token,
+        method="PUT"
+    )
 
         else:
             return jsonify({"error": "Unknown Spotify control."}), 400

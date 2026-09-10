@@ -1,1 +1,234 @@
-:root{--ink:#3b1b35;--pink:#ee3f91;--soft:#ffd5e5}*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:radial-gradient(#ffd2e2 1px,transparent 2px) 0 0/24px 24px,#fff3f8;color:var(--ink);font-family:"Trebuchet MS",sans-serif}.window{width:min(420px,calc(100% - 24px));margin:20px;background:#fffdfb;border:3px solid var(--ink);box-shadow:9px 9px 0 #f3a3c4;padding:18px}header{display:flex;justify-content:space-between;align-items:center;font:900 .75rem Arial Black,sans-serif;letter-spacing:1px}header a{padding:7px 9px;background:#bfe4dc;border:2px solid var(--ink);color:var(--ink);text-decoration:none;font:900 .65rem Arial Black,sans-serif;text-transform:uppercase}.vinyl-zone{height:280px;margin:18px 0;display:grid;place-items:center;position:relative;border:2px solid var(--ink);background:linear-gradient(135deg,#f9bbd4,#f487b6);overflow:hidden}.record{width:230px;aspect-ratio:1;border-radius:50%;padding:27%;background:repeating-radial-gradient(circle,transparent 0 7px,#ffffff45 8px 9px,transparent 10px 14px),conic-gradient(#c44c81,#f7aeca,#d85e90,#ffc9dc,#bd477b);border:3px solid #33172f;box-shadow:8px 8px #8e3b66}.record.spinning{animation:spin 3s linear infinite}.record img{width:100%;height:100%;object-fit:cover;border-radius:50%;border:2px solid var(--ink)}.hole{position:absolute;width:9px;height:9px;border-radius:50%;background:#fff;top:calc(50% - 4px);left:calc(50% - 4px)}.sparkle{position:absolute;right:28px;top:22px;color:white;font-size:2rem;text-shadow:2px 2px var(--pink)}.song{text-align:center;min-height:48px}.song p{margin:0;font:900 1.05rem Georgia,serif}.song small{color:#805369}.controls{display:flex;align-items:center;gap:10px;margin:12px 0}.controls button{width:40px;height:40px;border-radius:50%;background:white;border:2px solid var(--ink);font-weight:bold;cursor:pointer}.controls input{accent-color:var(--pink);flex:1}.controls span{font-size:.7rem}.window>p{margin:8px 0 15px;font-size:.75rem;color:#805369;text-align:center}.note{border-top:2px dashed #e8afc5;padding-top:14px}.note label{font:900 .72rem Arial Black,sans-serif;text-transform:uppercase}.note textarea{width:100%;height:85px;margin:8px 0;padding:9px;border:2px solid var(--ink);font: .9rem "Comic Sans MS",cursive}.note>div{display:flex;justify-content:space-between;align-items:center;font-size:.7rem}.note button{padding:7px 9px;border:2px solid var(--ink);background:#ffd7e6;color:var(--ink);font-weight:bold;text-transform:uppercase;cursor:pointer}.saved{margin-top:10px;padding:8px;background:#fff0f6;border-left:4px solid var(--pink);font: .8rem "Comic Sans MS",cursive}@keyframes spin{to{transform:rotate(360deg)}}
+:root {
+    --ink: #3b1b35;
+    --pink: #ee3f91;
+    --soft: #ffd5e5;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    background:
+        radial-gradient(#ffd2e2 1px, transparent 2px) 0 0 / 24px 24px,
+        #fff3f8;
+    color: var(--ink);
+    font-family: "Trebuchet MS", sans-serif;
+}
+
+.window {
+    width: min(420px, calc(100% - 24px));
+    margin: 20px;
+    background: #fffdfb;
+    border: 3px solid var(--ink);
+    box-shadow: 9px 9px 0 #f3a3c4;
+    padding: 18px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font: 900 0.75rem Arial Black, sans-serif;
+    letter-spacing: 1px;
+}
+
+header a {
+    padding: 7px 9px;
+    background: #bfe4dc;
+    border: 2px solid var(--ink);
+    color: var(--ink);
+    text-decoration: none;
+    font: 900 0.65rem Arial Black, sans-serif;
+    text-transform: uppercase;
+}
+
+.vinyl-zone {
+    height: 280px;
+    margin: 18px 0;
+    display: grid;
+    place-items: center;
+    position: relative;
+    border: 2px solid var(--ink);
+    background: linear-gradient(135deg, #f9bbd4, #f487b6);
+    overflow: hidden;
+}
+
+.record {
+    width: 230px;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    position: relative;
+    padding: 0;
+
+    background:
+        repeating-radial-gradient(
+            circle,
+            transparent 0 7px,
+            #ffffff45 8px 9px,
+            transparent 10px 14px
+        ),
+        conic-gradient(
+            #c44c81,
+            #f7aeca,
+            #d85e90,
+            #ffc9dc,
+            #bd477b
+        );
+
+    border: 3px solid #33172f;
+    box-shadow: 8px 8px #8e3b66;
+}
+
+.record.spinning {
+    animation: spin 3s linear infinite;
+}
+
+.record img {
+    position: absolute;
+
+    width: 52%;
+    height: 52%;
+
+    top: 24%;
+    left: 24%;
+
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid var(--ink);
+
+    z-index: 1;
+}
+
+.hole {
+    position: absolute;
+
+    width: 9px;
+    height: 9px;
+
+    border-radius: 50%;
+    background: #fff;
+
+    top: calc(50% - 4px);
+    left: calc(50% - 4px);
+
+    z-index: 2;
+}
+
+.sparkle {
+    position: absolute;
+    right: 28px;
+    top: 22px;
+    color: white;
+    font-size: 2rem;
+    text-shadow: 2px 2px var(--pink);
+}
+
+.song {
+    text-align: center;
+    min-height: 48px;
+}
+
+.song p {
+    margin: 0;
+    font: 900 1.05rem Georgia, serif;
+}
+
+.song small {
+    color: #805369;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 12px 0;
+}
+
+.controls button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: white;
+    border: 2px solid var(--ink);
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.controls input {
+    accent-color: var(--pink);
+    flex: 1;
+}
+
+.controls span {
+    font-size: 0.7rem;
+}
+
+.window > p {
+    margin: 8px 0 15px;
+    font-size: 0.75rem;
+    color: #805369;
+    text-align: center;
+}
+
+.note {
+    border-top: 2px dashed #e8afc5;
+    padding-top: 14px;
+}
+
+.note label {
+    font: 900 0.72rem Arial Black, sans-serif;
+    text-transform: uppercase;
+}
+
+.note textarea {
+    width: 100%;
+    height: 85px;
+    margin: 8px 0;
+    padding: 9px;
+    border: 2px solid var(--ink);
+    font: 0.9rem "Comic Sans MS", cursive;
+}
+
+.note > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.7rem;
+}
+
+.note button {
+    padding: 7px 9px;
+    border: 2px solid var(--ink);
+    background: #ffd7e6;
+    color: var(--ink);
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.saved {
+    margin-top: 10px;
+    padding: 8px;
+    background: #fff0f6;
+    border-left: 4px solid var(--pink);
+    font: 0.8rem "Comic Sans MS", cursive;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+html,
+body {
+    overflow: hidden;
+}
+.window {
+    overflow: hidden;
+}

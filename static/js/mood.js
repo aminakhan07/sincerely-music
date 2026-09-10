@@ -17,3 +17,6 @@ cover.addEventListener('load', async () => {
     // Keep the default pink palette if artwork colour extraction is unavailable.
   }
 });
+
+
+

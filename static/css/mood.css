@@ -1,1 +1,671 @@
-:root{--mood-a:#f487b6;--mood-b:#c44c81;--mood-deep:#3b1b35;--mood-light:#fff3f8}body{background:radial-gradient(color-mix(in srgb,var(--mood-a) 35%,white) 1px,transparent 2px) 0 0/24px 24px,var(--mood-light);transition:background 1.2s ease,color .8s ease}.window{box-shadow:9px 9px 0 color-mix(in srgb,var(--mood-a) 55%,white);transition:box-shadow 1s ease,border-color 1s ease}.vinyl-zone{background:linear-gradient(135deg,color-mix(in srgb,var(--mood-a) 58%,white),color-mix(in srgb,var(--mood-b) 56%,white));transition:background 1.2s ease}.record{background:repeating-radial-gradient(circle,transparent 0 7px,#ffffff45 8px 9px,transparent 10px 14px),conic-gradient(var(--mood-b),var(--mood-a),color-mix(in srgb,var(--mood-deep) 70%,var(--mood-a)),color-mix(in srgb,var(--mood-a) 55%,white),var(--mood-b));transition:background 1.2s ease,box-shadow 1.2s ease}.record img{box-shadow:0 0 0 5px color-mix(in srgb,var(--mood-a) 35%,white)}.controls input{accent-color:var(--mood-a)}.note button,header a{background:color-mix(in srgb,var(--mood-a) 22%,white);transition:background 1s ease}.sparkle{color:color-mix(in srgb,var(--mood-a) 25%,white);text-shadow:2px 2px var(--mood-b)}
+/* =========================================
+   SINCERELY, MUSIC — MOOD BACKGROUND
+   ========================================= */
+
+:root {
+    --mood-a: #f6b98f;
+    --mood-b: #ee8fa1;
+    --mood-c: #f7c99b;
+    --ink: #3b1738;
+    --soft-white: #fff8f5;
+}
+
+/* Whole app becomes the album mood */
+body {
+    background:
+        radial-gradient(
+            circle at 20% 15%,
+            color-mix(in srgb, var(--mood-a) 80%, white),
+            transparent 38%
+        ),
+        radial-gradient(
+            circle at 85% 80%,
+            color-mix(in srgb, var(--mood-b) 75%, white),
+            transparent 42%
+        ),
+        linear-gradient(
+            135deg,
+            var(--mood-a),
+            var(--mood-c),
+            var(--mood-b)
+        );
+
+    color: var(--ink);
+
+    transition:
+        background 1.2s ease,
+        color 0.8s ease;
+}
+
+
+/* Remove the old white card feeling */
+.window {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+
+    width: 100%;
+    max-width: 560px;
+
+    min-height: calc(100vh - 20px);
+
+    margin: 0;
+    padding: 34px 42px 30px;
+
+    transition: background 1s ease;
+}
+
+
+/* Header */
+header {
+    margin-bottom: 18px;
+
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+
+    color: var(--ink);
+}
+
+header a {
+    background: rgba(255, 248, 245, 0.35) !important;
+
+    border: 2px solid rgba(59, 23, 56, 0.45) !important;
+
+    border-radius: 10px;
+
+    padding: 11px 15px;
+
+    backdrop-filter: blur(8px);
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease;
+}
+
+header a:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 248, 245, 0.6) !important;
+}
+
+
+/* =========================================
+   VINYL
+   ========================================= */
+
+.vinyl-zone {
+    height: auto;
+
+    margin: 20px 0 18px;
+
+    border: none !important;
+
+    background: transparent !important;
+
+    overflow: visible;
+}
+
+
+/* BIGGER VINYL */
+.record {
+    width: min(330px, 75vw);
+
+    padding: 20%;
+
+    border-width: 3px;
+
+    box-shadow:
+        10px 10px 0 rgba(72, 28, 63, 0.35),
+        0 20px 45px rgba(72, 28, 63, 0.16);
+
+    transition:
+        transform 0.8s ease,
+        box-shadow 0.8s ease;
+}
+
+
+/* Keep the vinyl smooth */
+.record.spinning {
+    animation: spin 5s linear infinite;
+}
+
+
+/* Sparkles */
+.sparkle {
+    right: 8%;
+    top: 12%;
+
+    color: rgba(255, 250, 245, 0.9);
+
+    font-size: 2.2rem;
+
+    text-shadow:
+        2px 2px 0 rgba(59, 23, 56, 0.12);
+
+    animation: sparkleFloat 3s ease-in-out infinite;
+}
+
+
+/* =========================================
+   SONG INFO
+   ========================================= */
+
+.song {
+    margin-top: 14px;
+    margin-bottom: 28px;
+
+    color: var(--ink);
+}
+
+.song p {
+    margin-bottom: 6px;
+
+    font-size: 1.7rem;
+
+    letter-spacing: 0.5px;
+}
+
+.song small {
+    font-size: 0.95rem;
+
+    opacity: 0.72;
+}
+
+
+/* =========================================
+   CONTROLS
+   ========================================= */
+
+.controls {
+    display: grid;
+
+    grid-template-columns:
+        58px
+        72px
+        58px
+        58px;
+
+    justify-content: center;
+
+    align-items: center;
+
+    gap: 18px;
+
+    margin: 12px 0 10px;
+
+    position: relative;
+}
+
+
+/* Circular buttons */
+.controls button {
+    width: 58px;
+    height: 58px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 248, 245, 0.48) !important;
+
+    border: 2px solid var(--ink) !important;
+
+    color: var(--ink);
+
+    font-size: 1rem;
+
+    backdrop-filter: blur(8px);
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.controls button:hover:not(:disabled) {
+    transform: translateY(-3px) scale(1.04);
+
+    background: rgba(255, 248, 245, 0.75) !important;
+
+    box-shadow:
+        0 7px 18px rgba(59, 23, 56, 0.12);
+}
+
+
+/* Make play button bigger */
+#play {
+    width: 72px;
+    height: 72px;
+
+    font-size: 1.25rem;
+}
+
+
+/* =========================================
+   SINCERELY, MUSIC — PROGRESS BAR
+   ========================================= */
+
+.controls input[type="range"] {
+    grid-column: 1 / 5;
+    width: 100%;
+    margin-top: 12px;
+
+    height: 7px;
+
+    /* IMPORTANT: let WebView draw the progress */
+    appearance: none;
+    -webkit-appearance: none;
+
+   
+
+    cursor: pointer;
+}
+
+/* Make the slider fit the app */
+.controls input[type="range"]:disabled {
+    opacity: 1;
+}
+
+/* Chrome / WebView */
+.controls input[type="range"]::-webkit-slider-runnable-track {
+    height: 7px;
+    border-radius: 999px;
+}
+
+/* Chrome / WebView knob */
+.controls input[type="range"]::-webkit-slider-thumb {
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+/* Firefox */
+.controls input[type="range"]::-moz-range-track {
+    height: 7px;
+    border-radius: 999px;
+}
+
+.controls input[type="range"]::-moz-range-progress {
+    height: 7px;
+    border-radius: 999px;
+    background: var(--mood-a);
+}
+
+.controls input[type="range"]::-moz-range-thumb {
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+}
+
+.controls input[type="range"]::-moz-range-progress {
+    height: 7px;
+    border-radius: 10px;
+    background: var(--mood-a);
+}
+
+.controls input[type="range"]::-moz-range-thumb {
+    width: 19px;
+    height: 19px;
+    border-radius: 50%;
+    background: var(--mood-a);
+    border: 2px solid var(--mood-deep);
+    cursor: pointer;
+}
+
+
+/* Time */
+.controls span {
+    font-size: 0.75rem;
+
+    color: var(--ink);
+
+    opacity: 0.8;
+}
+
+
+/* =========================================
+   STATUS
+   ========================================= */
+
+.window > p {
+    margin-top: 30px;
+
+    color: var(--ink) !important;
+
+    opacity: 0.72;
+
+    font-size: 0.78rem;
+
+    letter-spacing: 0.2px;
+}
+
+
+/* =========================================
+   ANIMATIONS
+   ========================================= */
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes sparkleFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-6px);
+    }
+}
+
+
+/* =========================================
+   SMALL WINDOWS
+   ========================================= */
+
+@media (max-width: 480px) {
+
+    .window {
+        padding: 28px 24px;
+    }
+
+    .record {
+        width: min(300px, 78vw);
+    }
+
+    .song p {
+        font-size: 1.45rem;
+    }
+
+    .controls {
+        gap: 10px;
+    }
+}
+
+/* Dynamic vinyl colors */
+.record {
+    background:
+        repeating-radial-gradient(
+            circle,
+            transparent 0 7px,
+            rgba(255, 255, 255, 0.28) 8px 9px,
+            transparent 10px 14px
+        ),
+        conic-gradient(
+            var(--mood-b),
+            var(--mood-a),
+            color-mix(in srgb, var(--mood-b) 65%, black),
+            var(--mood-a),
+            color-mix(in srgb, var(--mood-a) 70%, white),
+            var(--mood-b)
+        ) !important;
+
+    transition:
+        background 1.2s ease,
+        box-shadow 1.2s ease;
+}
+
+.record img {
+    box-shadow:
+        0 0 0 5px
+        color-mix(in srgb, var(--mood-a) 40%, white) !important;
+}
+
+/* FINAL CUSTOM SEEK BAR */
+
+.controls input[type="range"] {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+    width: 100%;
+    height: 8px;
+    border-radius: 999px;
+    background: linear-gradient(
+        to right,
+        var(--mood-a) 0%,
+        var(--mood-a) var(--progress, 0%),
+        rgba(59, 23, 56, 0.28) var(--progress, 0%),
+        rgba(59, 23, 56, 0.28) 100%
+    ) !important;
+    border: none !important;
+    outline: none;
+    cursor: pointer;
+    accent-color: transparent !important;
+}
+
+.controls input[type="range"]::-webkit-slider-runnable-track {
+    appearance: none;
+    -webkit-appearance: none;
+    height: 8px;
+    border-radius: 999px;
+    background: transparent !important;
+}
+
+.controls input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 20px;
+    height: 20px;
+    margin-top: -6px;
+    border-radius: 50%;
+    background: var(--mood-a) !important;
+    border: 2px solid var(--mood-deep) !important;
+    box-shadow: 0 2px 7px rgba(59, 23, 56, 0.2);
+    cursor: pointer;
+}
+
+.controls input[type="range"]::-moz-range-track {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(59, 23, 56, 0.28) !important;
+}
+
+.controls input[type="range"]::-moz-range-progress {
+    height: 8px;
+    border-radius: 999px;
+    background: var(--mood-a) !important;
+}
+
+.controls input[type="range"]::-moz-range-thumb {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--mood-a) !important;
+    border: 2px solid var(--mood-deep) !important;
+}
+
+/* =========================================
+   FINAL SINCERELY, MUSIC PROGRESS BAR
+   ========================================= */
+
+.controls input#seek {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+
+    width: 100% !important;
+    height: 8px !important;
+
+    flex: 1 !important;
+    grid-column: 1 / 5;
+
+    border: none !important;
+    outline: none !important;
+    border-radius: 999px !important;
+
+    background: linear-gradient(
+        to right,
+        var(--mood-a) 0%,
+        var(--mood-a) var(--progress, 0%),
+        rgba(59, 23, 56, 0.30) var(--progress, 0%),
+        rgba(59, 23, 56, 0.30) 100%
+    ) !important;
+
+    accent-color: transparent !important;
+    cursor: pointer;
+}
+
+
+/* TRACK */
+.controls input#seek::-webkit-slider-runnable-track {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+
+    height: 8px !important;
+    border: none !important;
+    border-radius: 999px !important;
+    background: transparent !important;
+}
+
+
+/* KNOB */
+.controls input#seek::-webkit-slider-thumb {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+
+    width: 20px !important;
+    height: 20px !important;
+
+    margin-top: -6px !important;
+
+    border: 2px solid var(--mood-deep) !important;
+    border-radius: 50% !important;
+
+    background: var(--mood-a) !important;
+
+    box-shadow:
+        0 2px 8px rgba(59, 23, 56, 0.20) !important;
+
+    cursor: pointer;
+}
+
+
+/* FIREFOX */
+.controls input#seek::-moz-range-track {
+    height: 8px !important;
+    border-radius: 999px !important;
+    background: rgba(59, 23, 56, 0.30) !important;
+}
+
+.controls input#seek::-moz-range-progress {
+    height: 8px !important;
+    border-radius: 999px !important;
+    background: var(--mood-a) !important;
+}
+
+.controls input#seek::-moz-range-thumb {
+    width: 20px !important;
+    height: 20px !important;
+
+    border: 2px solid var(--mood-deep) !important;
+    border-radius: 50% !important;
+
+    background: var(--mood-a) !important;
+}
+
+
+/* =========================================
+   FINAL PROGRESS BAR LAYOUT
+   ========================================= */
+
+.progress {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 42px 1fr 42px;
+    align-items: center;
+    gap: 10px;
+    margin: 8px 0 0;
+}
+
+.progress span {
+    font-size: 0.7rem;
+    color: var(--ink);
+    opacity: 0.8;
+    text-align: center;
+}
+
+.progress input#seek {
+    width: 100%;
+    height: 8px;
+    margin: 0;
+    padding: 0;
+
+    appearance: none;
+    -webkit-appearance: none;
+
+    border: none;
+    outline: none;
+    border-radius: 999px;
+
+    background: linear-gradient(
+        to right,
+        var(--mood-a) 0%,
+        var(--mood-a) var(--progress, 0%),
+        rgba(59, 23, 56, 0.25) var(--progress, 0%),
+        rgba(59, 23, 56, 0.25) 100%
+    );
+
+    accent-color: transparent;
+    cursor: pointer;
+}
+
+/* Chrome / Edge */
+.progress input#seek::-webkit-slider-runnable-track {
+    height: 8px;
+    border-radius: 999px;
+    background: transparent;
+}
+
+.progress input#seek::-webkit-slider-thumb {
+    appearance: none;
+    -webkit-appearance: none;
+
+    width: 18px;
+    height: 18px;
+    margin-top: -5px;
+
+    border: 2px solid var(--mood-deep);
+    border-radius: 50%;
+    background: var(--mood-a);
+
+    box-shadow: 0 2px 7px rgba(59, 23, 56, 0.2);
+
+    cursor: pointer;
+}
+
+/* Firefox */
+.progress input#seek::-moz-range-track {
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(59, 23, 56, 0.25);
+}
+
+.progress input#seek::-moz-range-progress {
+    height: 8px;
+    border-radius: 999px;
+    background: var(--mood-a);
+}
+
+.progress input#seek::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+
+    border: 2px solid var(--mood-deep);
+    border-radius: 50%;
+    background: var(--mood-a);
+
+    cursor: pointer;
+}
+
+/* LOOP BUTTON ACTIVE STATE */
+
+.loop-button.active {
+    background: var(--mood-a) !important;
+    color: white !important;
+    box-shadow: 0 5px 14px rgba(59, 23, 56, 0.25);
+    transform: translateY(-2px);
+}
+
+.loop-button.active:hover {
+    transform: translateY(-3px) scale(1.04);
+    background: var(--mood-a) !important;
+}
